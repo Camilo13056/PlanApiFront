@@ -21,11 +21,14 @@ function App() {
         <div className="App">
             <Router>
                 <Routes>
-                    <Route path="/" element={isAuthenticated ? <Navigate to="/usuarios" /> : <Login />} />
-                    <Route path="/usuarios" element={isAuthenticated ? <ShowUsuarios /> : <Navigate to="/" />} />
-                    <Route path="/create" element={isAuthenticated ? <CreateUsuario /> : <Navigate to="/" />} />
-                    <Route path="/edit/:id" element={isAuthenticated ? <EditUsuario /> : <Navigate to="/" />} />
-                    <Route path="/registro" element={isAuthenticated ? <Registro /> : <Navigate to="/" />} />
+                    {/* Mostrar la lista de usuarios primero si está autenticado */}
+                    <Route path="/" element={isAuthenticated ? <ShowUsuarios /> : <Navigate to="/login" />} />
+                    {/* Rutas protegidas */}
+                    <Route path="/usuarios" element={isAuthenticated ? <ShowUsuarios /> : <Navigate to="/login" />} />
+                    <Route path="/create" element={isAuthenticated ? <CreateUsuario /> : <Navigate to="/login" />} />
+                    <Route path="/edit/:id" element={isAuthenticated ? <EditUsuario /> : <Navigate to="/login" />} />
+                    {/* Rutas de autenticación */}
+                    <Route path="/registro" element={<Registro />} />
                     <Route path="/login" element={<Login />} />
                 </Routes>
             </Router>

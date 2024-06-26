@@ -1,19 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const endpoint = 'http://localhost/Plan-Api/public/api';
 
-const ShowUsuarios = ({ token }) => {
+const ShowUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
-  const navigate = useNavigate();
 
   const getAllUsuarios = useCallback(async () => {
     try {
-      const response = await axios.get(`${endpoint}/usuarios`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.get(`${endpoint}/usuarios`);
       if (Array.isArray(response.data.usuarios)) {
         setUsuarios(response.data.usuarios);
       } else {
@@ -22,21 +19,15 @@ const ShowUsuarios = ({ token }) => {
     } catch (error) {
       console.error("Error al obtener los datos: ", error);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
-    if (!token) {
-      navigate('/login');
-    } else {
-      getAllUsuarios();
-    }
-  }, [token, navigate, getAllUsuarios]);
+    getAllUsuarios();
+  }, [getAllUsuarios]);
 
   const deleteUsuario = async (id) => {
     try {
-      await axios.delete(`${endpoint}/usuarios/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.delete(`${endpoint}/usuarios/${id}`);
       getAllUsuarios();
     } catch (error) {
       console.error("Error al eliminar el usuario: ", error);

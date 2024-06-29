@@ -26,7 +26,7 @@ const Login = () => {
                 password_app: passwordApp // Enviar password_app al servidor
             });
             console.log('Inicio de sesión exitoso', response.data);
-            navigate('/usuarios');
+            navigate('/usuario');
         } catch (error) {
             console.error('Error al iniciar sesión', error);
         }
